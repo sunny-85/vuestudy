@@ -65,7 +65,7 @@ export default {
     }
   },
   components: {
-    Discount: Discount,
+    Discount
   }
 }
 </script>
@@ -108,4 +108,10 @@ div{
   text-decoration: none;
 }
 
+.discount {
+  background:gray;
+  margin:10px;
+  padding:10px;
+  border-radius: 5px;
+}
 </style>
