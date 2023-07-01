@@ -17,8 +17,14 @@
  <!-- </div> -->
 
   <OpenBanner />
-  <Discount />
 
+  <Discount v-if="showDiscount == true" />
+  <p>지금 결제하면 {{ amount }}% 할인</p>
+
+  <button @click="priceSort">가격순정렬</button>
+  <button @click="sortDown">가격역순정렬</button>
+  <button @click="sortABC">가나다순정렬</button>
+  <button @click="sortBack">되돌리기</button>
 
   <div class="menu">
     <a href="" v-for="(m,i) in 메뉴들" :key="m">{{메뉴들[i]}}</a>
@@ -54,8 +60,11 @@ export default {
   name: 'App',
   data(){
     return{
+      amount : 30,
+      showDiscount : true,
       오브젝트 : {이름 : 'kim', age : 20},
       누른거 : 0,
+      원룸들오리지날 : [...oneloomList],
       원룸들 : oneloomList,
       모달창열렸니 : false,
       신고수1 : 0,
@@ -68,8 +77,45 @@ export default {
   methods: {
     increase(){
       this.신고수1 += 1
-    }
+    },
+    priceSort(){
+      this.원룸들.sort(function(a,b){
+        return a.price - b.price
+      })
+    },
+    sortDown(){
+      this.원룸들.sort(function(a,b){
+        return b.price - a.price
+      })
+    },
+    sortABC(){
+      this.원룸들.sort(function(a,b){
+        if(a.title < b.title){
+          return -1
+        }else{
+          return 1
+        }
+      })
+    },    
+    sortBack(){
+      this.원룸들 = [...this.원룸들오리지날]
+    },
   },
+  mounted() {
+    var interval = setInterval(() => {
+        if(this.amount > 0){
+          this.amount --;
+        }else{
+          this.amount = 0
+          clearInterval(interval)
+        }
+    },1000)
+  },
+  // mounted() {
+  //   setTimeout(()=>{
+  //     this.showDiscount = false
+  //   }, 2000)    
+  // },
   components: {
     Discount: Discount,
     OpenBanner : OpenBanner,

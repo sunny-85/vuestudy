@@ -41,6 +41,12 @@ export default {
       }
     }
   },
+  beforeUpdate() {
+    if(this.month == 2){
+      alert('2개월은 불가능합니다.')
+      this.month = 3
+    }
+  },
   props : {
     원룸들 : Array,
     누른거 : Number,
